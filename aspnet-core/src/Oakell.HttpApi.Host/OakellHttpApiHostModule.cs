@@ -56,9 +56,7 @@ public class OakellHttpApiHostModule : AbpModule
                 options.UseLocalServer();
                 options.UseAspNetCore();
             });
-        });
-
-        
+        }); 
     }
 
     public override void ConfigureServices(ServiceConfigurationContext context)
@@ -201,6 +199,11 @@ public class OakellHttpApiHostModule : AbpModule
         {
             app.UseErrorPage();
         }
+
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
 
         app.UseCorrelationId();
         app.UseStaticFiles();

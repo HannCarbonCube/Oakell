@@ -47,10 +47,6 @@ public class Program
                 .UseSerilog();
             await builder.AddApplicationAsync<OakellHttpApiHostModule>();
             var app = builder.Build();
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
             await app.InitializeApplicationAsync();
             await app.RunAsync();
             return 0;
