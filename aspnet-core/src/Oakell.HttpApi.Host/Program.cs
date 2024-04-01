@@ -33,21 +33,19 @@ public class Program
 
             Log.Information("Starting Oakell.HttpApi.Host.");
             var builder = WebApplication.CreateBuilder(args);
-
-            // builder.Services.Configure<ForwardedHeadersOptions>(options =>
-            // {
-            //     options.ForwardedHeaders = 
-            //         ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-            //     // If behind a load balancer, such as AWS ELB, you may need to add its IP address here
-            //     options.KnownProxies.Add(IPAddress.Parse("a7c5b599338a443bc8666bb06451da99-2125813449.af-south-1.elb.amazonaws.com"));
-            // });
-
             builder.Host.AddAppSettingsSecretsJson()
                 .UseAutofac()
                 .UseSerilog();
             await builder.AddApplicationAsync<OakellHttpApiHostModule>();
+
             var app = builder.Build();
             await app.InitializeApplicationAsync();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedFor                 
+            });
+            
             await app.RunAsync();
             return 0;
         }

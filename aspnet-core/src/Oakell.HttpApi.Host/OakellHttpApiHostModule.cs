@@ -78,10 +78,13 @@ public class OakellHttpApiHostModule : AbpModule
         ConfigureSwaggerServices(context, configuration);
     }
 
-
-
     private void ConfigureAuthentication(ServiceConfigurationContext context)
     {
+        Configure<ForwardedHeadersOptions>(options =>
+        {
+            options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        });
+
         context.Services.ForwardIdentityAuthenticationForBearer(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
         context.Services.Configure<AbpClaimsPrincipalFactoryOptions>(options =>
         {
@@ -199,11 +202,6 @@ public class OakellHttpApiHostModule : AbpModule
         {
             app.UseErrorPage();
         }
-
-        app.UseForwardedHeaders(new ForwardedHeadersOptions
-        {
-            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-        });
 
         app.UseCorrelationId();
         app.UseStaticFiles();
