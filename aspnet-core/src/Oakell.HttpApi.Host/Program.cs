@@ -39,13 +39,15 @@ public class Program
             await builder.AddApplicationAsync<OakellHttpApiHostModule>();
 
             var app = builder.Build();
-            await app.InitializeApplicationAsync();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
-                ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedFor                 
+                ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedFor,
+                KnownNetworks = { },
+                KnownProxies = { }                 
             });
-            
+
+            await app.InitializeApplicationAsync(); 
             await app.RunAsync();
             return 0;
         }

@@ -15,7 +15,7 @@ export const environment = {
     clientId: 'Oakell_App',
     responseType: 'code',
     scope: 'offline_access Oakell',
-    requireHttps: true
+    requireHttps: false
   },
   apis: {
     default: {
