@@ -43,11 +43,12 @@ public class Program
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedFor,
-                KnownNetworks = { },
+                KnownNetworks = { new Microsoft.AspNetCore.HttpOverrides.IPNetwork(IPAddress.Parse("ad658926677bc458f8eaa744a95e55fc-1665269304.af-south-1.elb.amazonaws.com"), 32) },
                 KnownProxies = { }                 
             });
 
             await app.InitializeApplicationAsync(); 
+            app.UseHttpsRedirection();
             await app.RunAsync();
             return 0;
         }
