@@ -56,6 +56,8 @@ public class OakellHttpApiHostModule : AbpModule
                 options.UseLocalServer();
                 options.UseAspNetCore();
             });
+
+            builder.AddServer(options => { options.UseAspNetCore().DisableTransportSecurityRequirement(); });
         }); 
     }
 
