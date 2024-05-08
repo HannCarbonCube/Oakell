@@ -40,15 +40,22 @@ public class Program
 
             var app = builder.Build();
 
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            var forwardedHeaderOptions = new ForwardedHeadersOptions
             {
-                ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedFor,
-                KnownNetworks = { },
-                KnownProxies = { }                 
-            });
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+                KnownProxies = { 
+                    IPAddress.Parse("13.246.76.165"), 
+                    IPAddress.Parse("13.246.76.194"), 
+                    IPAddress.Parse("13.246.83.72")
+                }
+            };
 
-            await app.InitializeApplicationAsync(); 
+            app.UseForwardedHeaders(forwardedHeaderOptions);
+
             app.UseHttpsRedirection();
+            app.UseSerilogRequestLogging();
+            app.MapControllers();
+
             await app.RunAsync();
             return 0;
         }
