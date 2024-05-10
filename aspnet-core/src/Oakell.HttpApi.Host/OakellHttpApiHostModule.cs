@@ -49,7 +49,7 @@ public class OakellHttpApiHostModule : AbpModule
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
         var configuration = context.Services.GetConfiguration();
-        var selfUrl = configuration["App:SelfUrl"];
+        var selfUrl = configuration["AuthServer:Authority"];
         PreConfigure<OpenIddictBuilder>(builder =>
         {
             builder.AddValidation(options =>
@@ -64,6 +64,12 @@ public class OakellHttpApiHostModule : AbpModule
                 if (selfUrl != null)
                 {
                     options.SetIssuer(new Uri(selfUrl));
+                    options.SetAuthorizationEndpointUris(new Uri(selfUrl)+"connect/authorize")
+                        .SetTokenEndpointUris(new Uri(selfUrl)+"/connect/token")
+                        .SetIntrospectionEndpointUris(new Uri(selfUrl)+"/connect/introspect")
+                        .SetLogoutEndpointUris(new Uri(selfUrl)+"/connect/logout")
+                        .SetRevocationEndpointUris(new Uri(selfUrl)+"/connect/revocat")
+                        .SetUserinfoEndpointUris(new Uri(selfUrl)+"/connect/userinfo");
                 }
              });
             

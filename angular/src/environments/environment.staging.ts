@@ -19,7 +19,7 @@ export const environment = {
   },
   apis: {
     default: {
-      url: 'http://api.staging.oakell.com/',
+      url: 'https://api.staging.oakell.com/',
       rootNamespace: 'Oakell',
     },
   },
