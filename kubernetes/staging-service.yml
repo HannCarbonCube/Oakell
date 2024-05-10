@@ -6,14 +6,19 @@ metadata:
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "alb"
     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:af-south-1:471112673244:certificate/6626c8dc-f193-4bc0-ac45-d41cb7c25d92"
-    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "https"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
 spec:
   selector:
     app: oakell
   ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
     - name: https
       protocol: TCP
       port: 443
-      targetPort: 8443
+      targetPort: 8080
+      
   type: LoadBalancer
