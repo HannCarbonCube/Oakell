@@ -10,7 +10,7 @@ export const environment = {
     logoUrl: '',
   },
   oAuthConfig: {
-    issuer: 'https://api.staging.oakell.com/',
+    issuer: 'http://api.staging.oakell.com/',
     redirectUri: baseUrl,
     clientId: 'Oakell_App',
     responseType: 'code',
@@ -19,7 +19,7 @@ export const environment = {
   },
   apis: {
     default: {
-      url: 'https://api.staging.oakell.com/',
+      url: 'http://api.staging.oakell.com/',
       rootNamespace: 'Oakell',
     },
   },
