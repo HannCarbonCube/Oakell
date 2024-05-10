@@ -3,7 +3,7 @@ import { Environment } from '@abp/ng.core';
 const baseUrl = 'https://staging.oakell.com/';
 
 export const environment = {
-  production: false,
+  production: true,
   application: {
     baseUrl,
     name: 'Oakell',
