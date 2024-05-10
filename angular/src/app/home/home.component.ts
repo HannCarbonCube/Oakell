@@ -16,7 +16,7 @@ export class HomeComponent {
   login() {
     console.log(this);
     console.log(this.authService);
-
-    // this.authService.navigateToLogin();
+    
+    this.authService.navigateToLogin();
   }
 }

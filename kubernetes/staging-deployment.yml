@@ -22,7 +22,7 @@ spec:
             - containerPort: 443
           env:
             - name: ASPNETCORE_ENVIRONMENT
-              value: ""
+              value: "Staging"
             - name: ConnectionStrings__Default
               valueFrom:
                 secretKeyRef:
