@@ -60,17 +60,19 @@ public class OakellHttpApiHostModule : AbpModule
             });
 
             builder.AddServer(options => { 
-                options.UseAspNetCore().DisableTransportSecurityRequirement();
-                // if (selfUrl != null)
-                // {
-                //     options.SetIssuer(new Uri(selfUrl));
-                //     options.SetAuthorizationEndpointUris(new Uri(selfUrl)+"connect/authorize")
-                //         .SetTokenEndpointUris(new Uri(selfUrl)+"/connect/token")
-                //         .SetIntrospectionEndpointUris(new Uri(selfUrl)+"/connect/introspect")
-                //         .SetLogoutEndpointUris(new Uri(selfUrl)+"/connect/logout")
-                //         .SetRevocationEndpointUris(new Uri(selfUrl)+"/connect/revocat")
-                //         .SetUserinfoEndpointUris(new Uri(selfUrl)+"/connect/userinfo");
-                // }
+                // options.UseAspNetCore().DisableTransportSecurityRequirement();
+                if (!string.IsNullOrEmpty(selfUrl))
+                {
+                    var baseUri = new Uri(selfUrl);
+
+                    options.SetIssuer(baseUri)
+                        .SetAuthorizationEndpointUris(new Uri(baseUri, "connect/authorize"))
+                        .SetTokenEndpointUris(new Uri(baseUri, "connect/token"))
+                        .SetIntrospectionEndpointUris(new Uri(baseUri, "connect/introspect"))
+                        .SetLogoutEndpointUris(new Uri(baseUri, "connect/logout"))
+                        .SetRevocationEndpointUris(new Uri(baseUri, "connect/revocat"))
+                        .SetUserinfoEndpointUris(new Uri(baseUri, "connect/userinfo"));
+                }
              });
             
         }); 
