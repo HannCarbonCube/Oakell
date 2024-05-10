@@ -59,8 +59,10 @@ public class OakellHttpApiHostModule : AbpModule
                 options.UseAspNetCore();
             });
 
-            builder.AddServer(options => { 
+            builder.AddServer(options =>
+            {
                 options.UseAspNetCore().DisableTransportSecurityRequirement();
+
                 if (!string.IsNullOrEmpty(selfUrl))
                 {
                     var baseUri = new Uri(selfUrl);
@@ -72,8 +74,12 @@ public class OakellHttpApiHostModule : AbpModule
                         .SetLogoutEndpointUris(new Uri(baseUri, "connect/logout"))
                         .SetRevocationEndpointUris(new Uri(baseUri, "connect/revocat"))
                         .SetUserinfoEndpointUris(new Uri(baseUri, "connect/userinfo"));
+
+                    options.EnableDeviceCodeFlow();
+                    options.UseAspNetCore();
                 }
-             });
+            });
+
             
         }); 
     }
@@ -210,6 +216,8 @@ public class OakellHttpApiHostModule : AbpModule
         var app = context.GetApplicationBuilder();
         var env = context.GetEnvironment();
 
+        app.UseForwardedHeaders();
+
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
@@ -233,6 +241,7 @@ public class OakellHttpApiHostModule : AbpModule
         {
             app.UseMultiTenancy();
         }
+
         app.UseUnitOfWork();
         app.UseDynamicClaims();
         app.UseAuthorization();
@@ -251,4 +260,5 @@ public class OakellHttpApiHostModule : AbpModule
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
     }
+
 }
