@@ -60,7 +60,7 @@ public class OakellHttpApiHostModule : AbpModule
             });
 
             builder.AddServer(options => { 
-                // options.UseAspNetCore().DisableTransportSecurityRequirement();
+                options.UseAspNetCore().DisableTransportSecurityRequirement();
                 if (!string.IsNullOrEmpty(selfUrl))
                 {
                     var baseUri = new Uri(selfUrl);
