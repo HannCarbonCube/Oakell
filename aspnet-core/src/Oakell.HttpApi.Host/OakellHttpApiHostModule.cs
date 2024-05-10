@@ -61,16 +61,16 @@ public class OakellHttpApiHostModule : AbpModule
 
             builder.AddServer(options => { 
                 options.UseAspNetCore().DisableTransportSecurityRequirement();
-                if (selfUrl != null)
-                {
-                    options.SetIssuer(new Uri(selfUrl));
-                    options.SetAuthorizationEndpointUris(new Uri(selfUrl)+"connect/authorize")
-                        .SetTokenEndpointUris(new Uri(selfUrl)+"/connect/token")
-                        .SetIntrospectionEndpointUris(new Uri(selfUrl)+"/connect/introspect")
-                        .SetLogoutEndpointUris(new Uri(selfUrl)+"/connect/logout")
-                        .SetRevocationEndpointUris(new Uri(selfUrl)+"/connect/revocat")
-                        .SetUserinfoEndpointUris(new Uri(selfUrl)+"/connect/userinfo");
-                }
+                // if (selfUrl != null)
+                // {
+                //     options.SetIssuer(new Uri(selfUrl));
+                //     options.SetAuthorizationEndpointUris(new Uri(selfUrl)+"connect/authorize")
+                //         .SetTokenEndpointUris(new Uri(selfUrl)+"/connect/token")
+                //         .SetIntrospectionEndpointUris(new Uri(selfUrl)+"/connect/introspect")
+                //         .SetLogoutEndpointUris(new Uri(selfUrl)+"/connect/logout")
+                //         .SetRevocationEndpointUris(new Uri(selfUrl)+"/connect/revocat")
+                //         .SetUserinfoEndpointUris(new Uri(selfUrl)+"/connect/userinfo");
+                // }
              });
             
         }); 
