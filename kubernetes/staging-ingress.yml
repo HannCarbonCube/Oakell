@@ -18,16 +18,17 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: oakell-service
-            port:
-              number: 80
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
             name: ssl-redirect
             port:
               name: use-annotation
+      - path: /secure
+        pathType: Prefix
+        backend:
+          service:
+            name: oakell-service
+            port:
+              number: 443
   tls:
   - hosts:
     - api.staging.oakell.com
+    secretName: oakell-tls-secret
