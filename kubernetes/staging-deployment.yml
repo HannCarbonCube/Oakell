@@ -35,5 +35,11 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8443
+            initialDelaySeconds: 10
+            periodSeconds: 10
       imagePullSecrets:
         - name: ecr-secret
