@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 using Serilog.Events;
 
@@ -29,25 +27,14 @@ public class Program
 
         try
         {
-            
-
             Log.Information("Starting Oakell.HttpApi.Host.");
             var builder = WebApplication.CreateBuilder(args);
             builder.Host.AddAppSettingsSecretsJson()
                 .UseAutofac()
                 .UseSerilog();
             await builder.AddApplicationAsync<OakellHttpApiHostModule>();
-
             var app = builder.Build();
-
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedFor,
-                KnownNetworks = { },
-                KnownProxies = { }                 
-            });
-
-            await app.InitializeApplicationAsync(); 
+            await app.InitializeApplicationAsync();
             await app.RunAsync();
             return 0;
         }
