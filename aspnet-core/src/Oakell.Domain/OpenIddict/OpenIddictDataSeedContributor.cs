@@ -102,9 +102,9 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 clientUri: consoleAndAngularClientRootUrl,
                 postLogoutRedirectUri: consoleAndAngularClientRootUrl
             );
+            Console.WriteLine(consoleAndAngularClientRootUrl);
+            Console.WriteLine(consoleAndAngularClientId);
         }
-
-
 
         // Swagger Client
         var swaggerClientId = configurationSection["Oakell_Swagger:ClientId"];
