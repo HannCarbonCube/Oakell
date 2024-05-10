@@ -6,8 +6,8 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
-    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '{"Type": "redirect", "RedirectConfig": {"Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:af-south-1:471112673244:certificate/6626c8dc-f193-4bc0-ac45-d41cb7c25d92
 spec:
   rules:
@@ -20,14 +20,8 @@ spec:
           service:
             name: oakell-service
             port:
-              number: 80
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: ssl-redirect
-            port:
-              name: use-annotation
+              number: 443
   tls:
   - hosts:
     - api.staging.oakell.com
+    secretName: your-tls-secret
