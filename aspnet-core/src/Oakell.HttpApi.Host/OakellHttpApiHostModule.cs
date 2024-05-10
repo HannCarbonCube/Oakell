@@ -75,7 +75,6 @@ public class OakellHttpApiHostModule : AbpModule
                         .SetRevocationEndpointUris(new Uri(baseUri, "connect/revocat"))
                         .SetUserinfoEndpointUris(new Uri(baseUri, "connect/userinfo"));
 
-                    options.EnableDeviceCodeFlow();
                     options.UseAspNetCore();
                 }
             });
