@@ -48,6 +48,8 @@ public class OakellHttpApiHostModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
+        var configuration = context.Services.GetConfiguration();
+        var selfUrl = configuration["App:SelfUrl"];
         PreConfigure<OpenIddictBuilder>(builder =>
         {
             builder.AddValidation(options =>
@@ -57,7 +59,14 @@ public class OakellHttpApiHostModule : AbpModule
                 options.UseAspNetCore();
             });
 
-            builder.AddServer(options => { options.UseAspNetCore().DisableTransportSecurityRequirement(); });
+            builder.AddServer(options => { 
+                options.UseAspNetCore().DisableTransportSecurityRequirement();
+                if (selfUrl != null)
+                {
+                    options.SetIssuer(new Uri(selfUrl));
+                }
+             });
+            
         }); 
     }
 
