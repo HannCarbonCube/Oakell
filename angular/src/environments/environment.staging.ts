@@ -3,7 +3,7 @@ import { Environment } from '@abp/ng.core';
 const baseUrl = 'https://staging.oakell.com/';
 
 export const environment = {
-  production: true,
+  production: false,
   application: {
     baseUrl,
     name: 'Oakell',
@@ -15,7 +15,7 @@ export const environment = {
     clientId: 'Oakell_App',
     responseType: 'code',
     scope: 'offline_access Oakell',
-    requireHttps: false
+    requireHttps: true
   },
   apis: {
     default: {
