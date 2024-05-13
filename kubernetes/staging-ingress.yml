@@ -27,15 +27,10 @@ spec:
             name: oakell-service
             port:
               number: 443
-      - path: /*  # This path ensures that all other paths are handled by oakell-service
+      - path: /*
         pathType: Prefix
         backend:
           service:
             name: oakell-service
             port:
               number: 443
-
-tls:
-  - hosts:
-    - api.staging.oakell.com
-    secretName: oakell-tls-secret
