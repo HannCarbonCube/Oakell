@@ -11,7 +11,7 @@ public class HomeController : AbpController
         // return Redirect("~/swagger");
         
         // Uncomment the following line if you want to return a view or another form of response.
-        return Redirect("/");
+        return Content("Welcome to the Oakell API!");
     }
 }
 
