@@ -7,6 +7,7 @@ public class HomeController : AbpController
 {
     public ActionResult Index()
     {
-        return Redirect("~/swagger");
+        // return Redirect("~/swagger");
+        return View();
     }
 }

@@ -79,8 +79,6 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
 
         var configurationSection = _configuration.GetSection("OpenIddict:Applications");
 
-
-        //Console Test / Angular Client
         var consoleAndAngularClientId = configurationSection["Oakell_App:ClientId"];
         if (!consoleAndAngularClientId.IsNullOrWhiteSpace())
         {
@@ -102,8 +100,6 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 clientUri: consoleAndAngularClientRootUrl,
                 postLogoutRedirectUri: consoleAndAngularClientRootUrl
             );
-            Console.WriteLine(consoleAndAngularClientRootUrl);
-            Console.WriteLine(consoleAndAngularClientId);
         }
 
         // Swagger Client
