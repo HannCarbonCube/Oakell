@@ -67,13 +67,13 @@ public class OakellHttpApiHostModule : AbpModule
                 {
                     var baseUri = new Uri(selfUrl);
 
-                    options.SetIssuer(baseUri)
-                        .SetAuthorizationEndpointUris(new Uri(baseUri, "connect/authorize"))
-                        .SetTokenEndpointUris(new Uri(baseUri, "connect/token"))
-                        .SetIntrospectionEndpointUris(new Uri(baseUri, "connect/introspect"))
-                        .SetLogoutEndpointUris(new Uri(baseUri, "connect/logout"))
-                        .SetRevocationEndpointUris(new Uri(baseUri, "connect/revocat"))
-                        .SetUserinfoEndpointUris(new Uri(baseUri, "connect/userinfo"));
+                    // options.SetIssuer(baseUri)
+                    //     .SetAuthorizationEndpointUris(new Uri(baseUri, "connect/authorize"))
+                    //     .SetTokenEndpointUris(new Uri(baseUri, "connect/token"))
+                    //     .SetIntrospectionEndpointUris(new Uri(baseUri, "connect/introspect"))
+                    //     .SetLogoutEndpointUris(new Uri(baseUri, "connect/logout"))
+                    //     .SetRevocationEndpointUris(new Uri(baseUri, "connect/revocat"))
+                    //     .SetUserinfoEndpointUris(new Uri(baseUri, "connect/userinfo"));
 
                     options.UseAspNetCore();
                 }
