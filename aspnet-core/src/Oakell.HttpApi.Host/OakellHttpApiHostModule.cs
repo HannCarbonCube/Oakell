@@ -31,6 +31,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Oakell;
 
@@ -274,6 +275,17 @@ public class OakellHttpApiHostModule : AbpModule
 
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+            endpoints.MapFallback(context =>
+            {
+                context.Response.Redirect("https://staging.oakell.com");
+                return Task.CompletedTask;
+            });
+        });
+
         app.UseConfiguredEndpoints();
     }
 
