@@ -88,10 +88,10 @@ public class OakellHttpApiHostModule : AbpModule
         var configuration = context.Services.GetConfiguration();
         var hostingEnvironment = context.Services.GetHostingEnvironment();
 
-        Configure<OpenIddictServerAspNetCoreBuilder>(configure => 
-        { 
-            configure.DisableTransportSecurityRequirement(); 
-        }); 
+        // Configure<OpenIddictServerAspNetCoreBuilder>(configure => 
+        // { 
+        //     configure.DisableTransportSecurityRequirement(); 
+        // }); 
 
         ConfigureAuthentication(context);
         ConfigureBundles();
