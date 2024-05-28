@@ -35,6 +35,14 @@ public class Program
             await builder.AddApplicationAsync<OakellHttpApiHostModule>();
             var app = builder.Build();
             await app.InitializeApplicationAsync();
+
+            app.Use(async (context, next) =>
+            {
+                Log.Information("Request Scheme: {Scheme}", context.Request.Scheme);
+                Log.Information("X-Forwarded-Proto: {XForwardedProto}", context.Request.Headers["X-Forwarded-Proto"]);
+                await next.Invoke();
+            });
+
             await app.RunAsync();
             return 0;
         }

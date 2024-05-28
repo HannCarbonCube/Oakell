@@ -30,6 +30,7 @@ using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Logging;
 
 namespace Oakell;
 
@@ -215,7 +216,23 @@ public class OakellHttpApiHostModule : AbpModule
         var app = context.GetApplicationBuilder();
         var env = context.GetEnvironment();
 
+        var forwardedHeadersOptions = new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        };
+        forwardedHeadersOptions.KnownNetworks.Clear();
+        forwardedHeadersOptions.KnownProxies.Clear(); 
+
         app.UseForwardedHeaders();
+
+        app.Use(async (context, next) =>
+        {
+            if (context.Request.Headers["X-Forwarded-Proto"] == "https")
+            {
+                context.Request.Scheme = "https";
+            }
+            await next();
+        });
 
         if (env.IsDevelopment())
         {
