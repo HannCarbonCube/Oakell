@@ -11,11 +11,9 @@ export const environment = {
   },
   oAuthConfig: {
     issuer: 'http://localhost:44380/',
-    redirectUri: baseUrl,
     clientId: 'Oakell_App',
-    responseType: 'code',
+    dummyClientSecret: '1q2w3e*',
     scope: 'offline_access Oakell',
-    requireHttps: false,
   },
   apis: {
     default: {
