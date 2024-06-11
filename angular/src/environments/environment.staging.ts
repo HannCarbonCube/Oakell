@@ -11,11 +11,9 @@ export const environment = {
   },
   oAuthConfig: {
     issuer: 'https://api.staging.oakell.com/',
-    redirectUri: baseUrl,
     clientId: 'Oakell_App',
-    responseType: 'code',
-    scope: 'offline_access Oakell',
-    requireHttps: false
+    dummyClientSecret: '1q2w3e*',
+    scope: 'offline_access Oakell'
   },
   apis: {
     default: {
