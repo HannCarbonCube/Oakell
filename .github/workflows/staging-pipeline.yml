@@ -50,9 +50,13 @@ jobs:
       run: |
         aws eks --region af-south-1 update-kubeconfig --name oakell
 
+    - name: Print Connection String
+      run: |
+          CONNECTION_STRING="${{ secrets.STAGING_CONNECTION_STRING }}"
+          echo "Connection String: ${CONNECTION_STRING}"
+
     - name: Create or Replace Database Secret  
       run: |
-        echo ${{ secrets.STAGING_CONNECTION_STRING }} 
         if kubectl get secret my-db-secret --namespace oakell-staging; then
           kubectl delete secret my-db-secret --namespace oakell-staging
         fi
