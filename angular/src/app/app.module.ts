@@ -16,6 +16,7 @@ import { APP_ROUTE_PROVIDER } from './route.provider';
 import { FeatureManagementModule } from '@abp/ng.feature-management';
 import { AbpOAuthModule } from '@abp/ng.oauth';
 import { ThemeBasicModule } from '@abp/ng.theme.basic';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,10 @@ import { ThemeBasicModule } from '@abp/ng.theme.basic';
     FeatureManagementModule.forRoot(),
           ThemeBasicModule.forRoot(),
   ],
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent
+  ],
   providers: [APP_ROUTE_PROVIDER],
   bootstrap: [AppComponent],
 })

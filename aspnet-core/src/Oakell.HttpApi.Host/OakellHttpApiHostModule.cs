@@ -64,23 +64,12 @@ public class OakellHttpApiHostModule : AbpModule
             builder.AddServer(options =>
             {
                 options.UseAspNetCore().DisableTransportSecurityRequirement();
-
-                if (!string.IsNullOrEmpty(selfUrl))
-                {
-                    var baseUri = new Uri(selfUrl);
-
-                    // options.SetIssuer(baseUri)
-                    //     .SetAuthorizationEndpointUris(new Uri(baseUri, "connect/authorize"))
-                    //     .SetTokenEndpointUris(new Uri(baseUri, "connect/token"))
-                    //     .SetIntrospectionEndpointUris(new Uri(baseUri, "connect/introspect"))
-                    //     .SetLogoutEndpointUris(new Uri(baseUri, "connect/logout"))
-                    //     .SetRevocationEndpointUris(new Uri(baseUri, "connect/revocat"))
-                    //     .SetUserinfoEndpointUris(new Uri(baseUri, "connect/userinfo"));
-
-                    options.UseAspNetCore();
-                }
+                options.AddDevelopmentSigningCertificate()
+                   .AllowPasswordFlow()
+                   .AllowRefreshTokenFlow()
+                   .SetTokenEndpointUris("/connect/token")
+                   .AddEphemeralEncryptionKey();
             });
-
             
         }); 
     }
@@ -89,11 +78,6 @@ public class OakellHttpApiHostModule : AbpModule
     {
         var configuration = context.Services.GetConfiguration();
         var hostingEnvironment = context.Services.GetHostingEnvironment();
-
-        // Configure<OpenIddictServerAspNetCoreBuilder>(configure => 
-        // { 
-        //     configure.DisableTransportSecurityRequirement(); 
-        // }); 
 
         ConfigureAuthentication(context);
         ConfigureBundles();
