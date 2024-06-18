@@ -32,6 +32,14 @@ public class Program
             builder.Host.AddAppSettingsSecretsJson()
                 .UseAutofac()
                 .UseSerilog();
+
+            // Retrieve the configuration
+            var configuration = builder.Configuration;
+
+            // Log the Client Id from the configuration
+            var clientId = configuration["AuthServer:ClientId"];
+            
+
             await builder.AddApplicationAsync<OakellHttpApiHostModule>();
             var app = builder.Build();
             await app.InitializeApplicationAsync();
@@ -42,6 +50,8 @@ public class Program
                 Log.Information("X-Forwarded-Proto: {XForwardedProto}", context.Request.Headers["X-Forwarded-Proto"]);
                 await next.Invoke();
             });
+
+            Log.Information("Client Id: {ClientId}", clientId);
 
             await app.RunAsync();
             return 0;
