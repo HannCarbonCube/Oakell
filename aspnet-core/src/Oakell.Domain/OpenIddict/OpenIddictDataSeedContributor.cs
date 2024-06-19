@@ -85,12 +85,17 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
 
         var configurationSection = _configuration.GetSection("OpenIddict:Applications");
 
-        Logger.LogInformation("Creating OpenIddict applications..." + configurationSection);
+        // Log the entire configuration section
+        foreach (var kvp in configurationSection.GetChildren())
+        {
+            Logger.LogInformation($"Key: {kvp.Key}, Value: {kvp.Value}");
+        }
 
         var consoleAndAngularClientId = configurationSection["Oakell_App:ClientId"];
         Logger.LogInformation("Creating OpenIddict application for Console Test / Angular Application... "+ consoleAndAngularClientId);
         if (!consoleAndAngularClientId.IsNullOrWhiteSpace())
         {
+            Logger.LogInformation($"Creating application '{consoleAndAngularClientId}'...");
             var consoleAndAngularClientRootUrl = configurationSection["Oakell_App:RootUrl"]?.TrimEnd('/');
             await CreateApplicationAsync(
                 name: consoleAndAngularClientId!,
@@ -109,6 +114,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 clientUri: consoleAndAngularClientRootUrl,
                 postLogoutRedirectUri: consoleAndAngularClientRootUrl
             );
+            Logger.LogInformation($"Created application '{consoleAndAngularClientId}'.");
         }
 
         // Swagger Client
