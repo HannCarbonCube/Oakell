@@ -85,7 +85,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
 
         var configurationSection = _configuration.GetSection("OpenIddict:Applications");
 
-        Logger.LogInformation("Creating OpenIddict applications...");
+        Logger.LogInformation("Creating OpenIddict applications..." + configurationSection);
 
         var consoleAndAngularClientId = configurationSection["Oakell_App:ClientId"];
         Logger.LogInformation("Creating OpenIddict application for Console Test / Angular Application... "+ consoleAndAngularClientId);
