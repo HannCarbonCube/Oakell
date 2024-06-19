@@ -50,14 +50,21 @@ jobs:
       run: |
         aws eks --region af-south-1 update-kubeconfig --name oakell
 
-    - name: Create or Replace Database Secret  
+    - name: Delete Existing Database Secret if Exists
       run: |
-        echo ${{ secrets.STAGING_CONNECTION_STRING }} 
-        if kubectl get secret my-db-secret --namespace oakell-staging; then
-          kubectl delete secret my-db-secret --namespace oakell-staging
-        fi
+          if kubectl get secret my-db-secret --namespace oakell-staging; then
+            kubectl delete secret my-db-secret --namespace oakell-staging
+          fi
+      env:
+        AWS_DEFAULT_REGION: af-south-1
+        AWS_REGION: af-south-1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Create Database Secret
+      run: |
           kubectl create secret generic my-db-secret \
-            --from-literal=connectionstring=${{ secrets.STAGING_CONNECTION_STRING }}  \
+            --from-literal=connectionstring="${{ secrets.STAGING_CONNECTION_STRING }}" \
             --namespace oakell-staging \
             --dry-run=client -o yaml | kubectl apply -f -
       env:
