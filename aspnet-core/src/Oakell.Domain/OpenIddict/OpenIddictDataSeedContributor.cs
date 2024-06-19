@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using OpenIddict.Abstractions;
 using Volo.Abp;
 using Volo.Abp.Authorization.Permissions;
@@ -16,6 +18,7 @@ using Volo.Abp.OpenIddict.Scopes;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.Uow;
 
+
 namespace Oakell.OpenIddict;
 
 /* Creates initial data that is needed to property run the application
@@ -23,6 +26,7 @@ namespace Oakell.OpenIddict;
  */
 public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDependency
 {
+    public ILogger<OpenIddictDataSeedContributor> Logger { get; set; }
     private readonly IConfiguration _configuration;
     private readonly IOpenIddictApplicationRepository _openIddictApplicationRepository;
     private readonly IAbpApplicationManager _applicationManager;
@@ -47,6 +51,8 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         _scopeManager = scopeManager;
         _permissionDataSeeder = permissionDataSeeder;
         L = l;
+
+        Logger = NullLogger<OpenIddictDataSeedContributor>.Instance;
     }
 
     [UnitOfWork]
@@ -79,7 +85,10 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
 
         var configurationSection = _configuration.GetSection("OpenIddict:Applications");
 
+        Logger.LogInformation("Creating OpenIddict applications...");
+
         var consoleAndAngularClientId = configurationSection["Oakell_App:ClientId"];
+        Logger.LogInformation("Creating OpenIddict application for Console Test / Angular Application... "+ consoleAndAngularClientId);
         if (!consoleAndAngularClientId.IsNullOrWhiteSpace())
         {
             var consoleAndAngularClientRootUrl = configurationSection["Oakell_App:RootUrl"]?.TrimEnd('/');
@@ -138,17 +147,19 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         if (!string.IsNullOrEmpty(secret) && string.Equals(type, OpenIddictConstants.ClientTypes.Public,
                 StringComparison.OrdinalIgnoreCase))
         {
+            Logger.LogWarning("No client secret can be set for public applications.");
             throw new BusinessException(L["NoClientSecretCanBeSetForPublicApplications"]);
         }
 
         if (string.IsNullOrEmpty(secret) && string.Equals(type, OpenIddictConstants.ClientTypes.Confidential,
                 StringComparison.OrdinalIgnoreCase))
         {
+            Logger.LogWarning("The client secret is required for confidential applications.");
             throw new BusinessException(L["TheClientSecretIsRequiredForConfidentialApplications"]);
         }
 
         var client = await _openIddictApplicationRepository.FindByClientIdAsync(name);
-
+        Logger.LogInformation("Creating OpenIddict application... "+ name);
         var application = new AbpApplicationDescriptor {
             ClientId = name,
             ClientType = type,
@@ -157,6 +168,8 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             DisplayName = displayName,
             ClientUri = clientUri,
         };
+
+        Logger.LogInformation("Adding permissions to OpenIddict application... "+ application);
 
         Check.NotNullOrEmpty(grantTypes, nameof(grantTypes));
         Check.NotNullOrEmpty(scopes, nameof(scopes));
@@ -275,6 +288,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             {
                 if (!Uri.TryCreate(redirectUri, UriKind.Absolute, out var uri) || !uri.IsWellFormedOriginalString())
                 {
+                    Logger.LogWarning("Invalid redirect uri: "+ redirectUri);
                     throw new BusinessException(L["InvalidRedirectUri", redirectUri]);
                 }
 
@@ -292,6 +306,7 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 if (!Uri.TryCreate(postLogoutRedirectUri, UriKind.Absolute, out var uri) ||
                     !uri.IsWellFormedOriginalString())
                 {
+                    Logger.LogWarning("Invalid post logout redirect uri: "+ postLogoutRedirectUri);
                     throw new BusinessException(L["InvalidPostLogoutRedirectUri", postLogoutRedirectUri]);
                 }
 
@@ -310,8 +325,11 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 permissions,
                 null
             );
+
+            Logger.LogInformation("Seed Permissions Data "+ application);
         }
 
+        Logger.LogInformation("Client "+ application + client);
         if (client == null)
         {
             await _applicationManager.CreateAsync(application);
