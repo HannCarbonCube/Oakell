@@ -41,7 +41,7 @@ namespace Oakell.EntityFrameworkCore
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Oakell.DbMigrator/"))
-                .AddJsonFile($"appsettings.{environment}.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
