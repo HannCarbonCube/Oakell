@@ -84,14 +84,10 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         };
 
         var configurationSection = _configuration.GetSection("OpenIddict:Applications");
-
-        foreach (var kvp in configurationSection.GetChildren())
-        {
-            Logger.LogInformation($"Key: {kvp.Key}, Value: {kvp.Value}");
-        }
+        Logger.LogInformation("ClientId: " + configurationSection["Oakell_App:ClientId"]);
 
         var consoleAndAngularClientId = configurationSection["Oakell_App:ClientId"];
-        
+
         Logger.LogInformation("Creating OpenIddict application for Console Test / Angular Application... "+ consoleAndAngularClientId);
         if (!consoleAndAngularClientId.IsNullOrWhiteSpace())
         {

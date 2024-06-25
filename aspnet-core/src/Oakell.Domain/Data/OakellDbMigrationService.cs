@@ -202,7 +202,7 @@ public class OakellDbMigrationService : ITransientDependency
     private string? GetSolutionDirectoryPath()
     {
         var currentDirectory = new DirectoryInfo(Directory.GetCurrentDirectory());
-
+        Logger.LogInformation("Current Directory: {CurrentDirectory}", currentDirectory.FullName);
         while (currentDirectory != null && Directory.GetParent(currentDirectory.FullName) != null)
         {
             currentDirectory = Directory.GetParent(currentDirectory.FullName);

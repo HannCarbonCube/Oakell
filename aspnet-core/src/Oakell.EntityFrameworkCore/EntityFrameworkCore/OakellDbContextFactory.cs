@@ -37,6 +37,7 @@ namespace Oakell.EntityFrameworkCore
         private IConfigurationRoot BuildConfiguration()
         {
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
+            Logger.LogInformation("Environment: {Environment}", environment);
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Oakell.DbMigrator/"))
