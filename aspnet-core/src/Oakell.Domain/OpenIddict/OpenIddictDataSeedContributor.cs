@@ -84,14 +84,10 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         };
 
         var configurationSection = _configuration.GetSection("OpenIddict:Applications");
-        Logger.LogInformation("ClientId: " + configurationSection["Oakell_App:ClientId"]);
 
         var consoleAndAngularClientId = configurationSection["Oakell_App:ClientId"];
-
-        Logger.LogInformation("Creating OpenIddict application for Console Test / Angular Application... "+ consoleAndAngularClientId);
         if (!consoleAndAngularClientId.IsNullOrWhiteSpace())
         {
-            Logger.LogInformation($"Creating application '{consoleAndAngularClientId}'...");
             var consoleAndAngularClientRootUrl = configurationSection["Oakell_App:RootUrl"]?.TrimEnd('/');
             await CreateApplicationAsync(
                 name: consoleAndAngularClientId!,
@@ -110,7 +106,6 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 clientUri: consoleAndAngularClientRootUrl,
                 postLogoutRedirectUri: consoleAndAngularClientRootUrl
             );
-            Logger.LogInformation($"Created application '{consoleAndAngularClientId}'.");
         }
 
         // Swagger Client
@@ -161,7 +156,6 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         }
 
         var client = await _openIddictApplicationRepository.FindByClientIdAsync(name);
-        Logger.LogInformation("Creating OpenIddict application... "+ name);
         var application = new AbpApplicationDescriptor {
             ClientId = name,
             ClientType = type,
@@ -170,8 +164,6 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
             DisplayName = displayName,
             ClientUri = clientUri,
         };
-
-        Logger.LogInformation("Adding permissions to OpenIddict application... "+ application);
 
         Check.NotNullOrEmpty(grantTypes, nameof(grantTypes));
         Check.NotNullOrEmpty(scopes, nameof(scopes));
@@ -328,10 +320,8 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
                 null
             );
 
-            Logger.LogInformation("Seed Permissions Data "+ application);
         }
 
-        Logger.LogInformation("Client "+ application + client);
         if (client == null)
         {
             await _applicationManager.CreateAsync(application);
