@@ -12,7 +12,6 @@ export const environment = {
   oAuthConfig: {
     issuer: 'https://api.staging.oakell.com/',
     clientId: 'Oakell_App',
-    dummyClientSecret: '1q2w3e*',
     scope: 'offline_access Oakell'
   },
   apis: {
