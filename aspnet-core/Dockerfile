@@ -46,7 +46,7 @@ RUN mkdir -p /app/Oakell.HttpApi.Host /app/Oakell.DbMigrator
 COPY --from=publish-api /app/publish /app/Oakell.HttpApi.Host
 COPY --from=publish-db-migrator /app/publish-db-migrator /app/Oakell.DbMigrator
 
-# Copy the entire project directories to maintain the folder structure including appsettings
+# Copy the entire project directories to maintain the folder structure
 COPY src/Oakell.HttpApi.Host/ /app/Oakell.HttpApi.Host/
 COPY src/Oakell.DbMigrator/ /app/Oakell.DbMigrator/
 
