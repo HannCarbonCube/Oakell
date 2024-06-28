@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Run DbMigrator
-cd /app/dbmigrator
+cd /app/Oakell.DbMigrator
 dotnet Oakell.DbMigrator.dll
 
 # Run HttpApi.Host
-cd /app
+cd /app/Oakell.HttpApi.Host
 dotnet Oakell.HttpApi.Host.dll

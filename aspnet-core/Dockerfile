@@ -35,15 +35,23 @@ RUN dotnet publish "src/Oakell.HttpApi.Host/Oakell.HttpApi.Host.csproj" -c Relea
 FROM build AS publish-db-migrator
 RUN dotnet publish "src/Oakell.DbMigrator/Oakell.DbMigrator.csproj" -c Release -o /app/publish-db-migrator
 
-# Copy the appsettings files for DbMigrator
-COPY src/Oakell.DbMigrator/appsettings.json /app/dbmigrator/appsettings.json
-COPY src/Oakell.DbMigrator/appsettings.Staging.json /app/dbmigrator/appsettings.Staging.json
-
 # Final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+
+# Create directories for HttpApi.Host and DbMigrator
 WORKDIR /app
-COPY --from=publish-api /app/publish .
-COPY --from=publish-db-migrator /app/publish-db-migrator ./dbmigrator
-COPY ./scripts/startup.sh ./startup.sh
-RUN chmod +x ./startup.sh
-ENTRYPOINT ["./startup.sh"]
+RUN mkdir -p /app/Oakell.HttpApi.Host /app/Oakell.DbMigrator
+
+# Copy published files
+COPY --from=publish-api /app/publish /app/Oakell.HttpApi.Host
+COPY --from=publish-db-migrator /app/publish-db-migrator /app/Oakell.DbMigrator
+
+# Copy the entire project directories to maintain the folder structure including appsettings
+COPY src/Oakell.HttpApi.Host/ /app/Oakell.HttpApi.Host/
+COPY src/Oakell.DbMigrator/ /app/Oakell.DbMigrator/
+
+# Copy the startup script
+COPY ./scripts/startup.sh /app/startup.sh
+
+RUN chmod +x /app/startup.sh
+ENTRYPOINT ["/app/startup.sh"]
