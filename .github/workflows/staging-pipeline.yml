@@ -20,24 +20,38 @@ jobs:
     - name: Build
       run: dotnet build ./aspnet-core/ --no-restore --configuration Release
 
-    - name: Run Domain Tests
-      run: dotnet test ./aspnet-core/src/MyProject.Domain.Tests/MyProject.Domain.Tests.csproj --no-build --configuration Release --collect "Code coverage"
-
-    - name: Run Application Tests
-      run: dotnet test ./aspnet-core/src/MyProject.Application.Tests/MyProject.Application.Tests.csproj --no-build --configuration Release --collect "Code coverage"
-
-    - name: Run EntityFrameworkCore Tests
-      run: dotnet test ./aspnet-core/src/MyProject.EntityFrameworkCore.Tests/MyProject.EntityFrameworkCore.Tests.csproj --no-build --configuration Release --collect "Code coverage"
-
-    - name: Run Web Tests
-      run: dotnet test ./aspnet-core/src/MyProject.Web.Tests/MyProject.Web.Tests.csproj --no-build --configuration Release --collect "Code coverage"
-
-    - name: Publish Test Results
-      if: always()
-      uses: actions/upload-artifact@v2
-      with:
-        name: test-results
-        path: '**/TestResults/*'
+  test-backend:
+      needs: build-backend
+      runs-on: ubuntu-latest
+      environment: develop
+      steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '8.0'
+  
+      - name: Restore dependencies
+        run: dotnet restore ./aspnet-core/
+        
+      - name: Run Domain Tests
+        run: dotnet test ./aspnet-core/test/Oakell.Domain.Tests/Oakell.Domain.Tests.csproj --no-build --configuration Release --collect "Code coverage"
+  
+      - name: Run Application Tests
+        run: dotnet test ./aspnet-core/test/Oakell.Application.Tests/Oakell.Application.Tests.csproj --no-build --configuration Release --collect "Code coverage"
+  
+      - name: Run EntityFrameworkCore Tests
+        run: dotnet test ./aspnet-core/test/Oakell.EntityFrameworkCore.Tests/Oakell.EntityFrameworkCore.Tests.csproj --no-build --configuration Release --collect "Code coverage"
+  
+      - name: Run Web Tests
+        run: dotnet test ./aspnet-core/test/Oakell.Web.Tests/Oakell.Web.Tests.csproj --no-build --configuration Release --collect "Code coverage"
+  
+      - name: Publish Test Results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: '**/TestResults/*'
 
   deploy-backend:
     needs: build-backend
