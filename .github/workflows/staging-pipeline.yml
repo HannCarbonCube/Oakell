@@ -35,13 +35,12 @@ jobs:
       run: dotnet restore ./aspnet-core/
       
     - name: Run Domain Tests
-      run: dotnet test ./aspnet-core/test/Oakell.Domain.Tests/Oakell.Domain.Tests.csproj --no-build
-
+      run: dotnet test ./aspnet-core/test/Oakell.Domain.Tests/Oakell.Domain.Tests.csproj
     - name: Run Application Tests
-      run: dotnet test ./aspnet-core/test/Oakell.Application.Tests/Oakell.Application.Tests.csproj --no-build
+      run: dotnet test ./aspnet-core/test/Oakell.Application.Tests/Oakell.Application.Tests.csproj
 
     - name: Run EntityFrameworkCore Tests
-      run: dotnet test ./aspnet-core/test/Oakell.EntityFrameworkCore.Tests/Oakell.EntityFrameworkCore.Tests.csproj --no-build
+      run: dotnet test ./aspnet-core/test/Oakell.EntityFrameworkCore.Tests/Oakell.EntityFrameworkCore.Tests.csproj
 
     - name: Publish Test Results
       if: always()
