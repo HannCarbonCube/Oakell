@@ -18,13 +18,7 @@ jobs:
       run: dotnet restore ./aspnet-core/
       
     - name: Build
-      id: build
-      run: dotnet build ./aspnet-core/ --configuration Release --output ./output
-    - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: build-output
-        path: ./aspnet-core/output
+      run: dotnet build ./aspnet-core/ --no-restore --configuration Release
 
   test-backend:
     needs: build-backend
@@ -37,23 +31,24 @@ jobs:
       with:
         dotnet-version: '8.0'
 
-    - name: Download Build Artifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: build-output
-        path: ./aspnet-core/output
-
+    - name: Restore dependencies
+      run: dotnet restore ./aspnet-core/
+      
     - name: Run Domain Tests
-      run: dotnet test ./aspnet-core/test/Oakell.Domain.Tests/Oakell.Domain.Tests.csproj --configuration Release --no-build
-
+      run: dotnet test ./aspnet-core/test/Oakell.Domain.Tests/Oakell.Domain.Tests.csproj
+      
     - name: Run Application Tests
-      run: dotnet test ./aspnet-core/test/Oakell.Application.Tests/Oakell.Application.Tests.csproj --configuration Release --no-build
+      run: dotnet test ./aspnet-core/test/Oakell.Application.Tests/Oakell.Application.Tests.csproj
 
     - name: Run EntityFrameworkCore Tests
-      run: dotnet test ./aspnet-core/test/Oakell.EntityFrameworkCore.Tests/Oakell.EntityFrameworkCore.Tests.csproj --configuration Release
+      run: dotnet test ./aspnet-core/test/Oakell.EntityFrameworkCore.Tests/Oakell.EntityFrameworkCore.Tests.csproj
 
-    - name: Run Web Tests
-      run: dotnet test ./aspnet-core/test/Oakell.Web.Tests/Oakell.Web.Tests.csproj --configuration Release --no-build
+    - name: Publish Test Results
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: '**/TestResults/*'
 
   deploy-backend:
     needs: test-backend
