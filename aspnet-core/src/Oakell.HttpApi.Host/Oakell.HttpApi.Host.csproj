@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Oakell.Application\Oakell.Application.csproj" />
+    <ProjectReference Include="..\Oakell.Services\Oakell.Services.csproj" />
     <ProjectReference Include="..\Oakell.EntityFrameworkCore\Oakell.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Oakell.HttpApi\Oakell.HttpApi.csproj" />
   </ItemGroup>

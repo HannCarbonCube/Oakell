@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Oakell.EntityFrameworkCore\Oakell.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\Oakell.Application.Tests\Oakell.Application.Tests.csproj" />
+    <ProjectReference Include="..\Oakell.Services.Tests\Oakell.Services.Tests.csproj" />
     <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="8.0.2" />
   </ItemGroup>
 

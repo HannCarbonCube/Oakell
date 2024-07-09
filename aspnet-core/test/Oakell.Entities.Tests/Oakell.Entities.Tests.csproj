@@ -9,12 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Oakell.Application\Oakell.Application.csproj" />
-    <ProjectReference Include="..\Oakell.Domain.Tests\Oakell.Domain.Tests.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <ProjectReference Include="..\..\src\Oakell.Entities\Oakell.Entities.csproj" />
+    <ProjectReference Include="..\Oakell.TestBase\Oakell.TestBase.csproj" />
   </ItemGroup>
 
 </Project>

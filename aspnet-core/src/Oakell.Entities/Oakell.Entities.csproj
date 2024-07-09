@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Oakell.Domain.Shared\Oakell.Domain.Shared.csproj" />
+    <ProjectReference Include="..\Oakell.Entities.Shared\Oakell.Entities.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

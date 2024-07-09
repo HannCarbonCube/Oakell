@@ -10,7 +10,7 @@ using Volo.Abp.TenantManagement;
 namespace Oakell;
 
 [DependsOn(
-    typeof(OakellDomainModule),
+    typeof(OakellEntitiesModule),
     typeof(AbpAccountApplicationModule),
     typeof(OakellApplicationContractsModule),
     typeof(AbpIdentityApplicationModule),

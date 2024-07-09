@@ -11,7 +11,7 @@ namespace Oakell.Samples;
  * (like IdentityUserManager here).
  * Only test your own domain services.
  */
-public abstract class SampleDomainTests<TStartupModule> : OakellDomainTestBase<TStartupModule>
+public abstract class SampleDomainTests<TStartupModule> : OakellEntitiesTestBase<TStartupModule>
     where TStartupModule : IAbpModule
 {
     private readonly IIdentityUserRepository _identityUserRepository;
