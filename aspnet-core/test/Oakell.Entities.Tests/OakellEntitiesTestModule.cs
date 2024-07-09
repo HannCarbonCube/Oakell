@@ -3,10 +3,10 @@
 namespace Oakell;
 
 [DependsOn(
-    typeof(OakellDomainModule),
+    typeof(OakellEntitiesModule),
     typeof(OakellTestBaseModule)
 )]
-public class OakellDomainTestModule : AbpModule
+public class OakellEntitiesTestModule : AbpModule
 {
 
 }

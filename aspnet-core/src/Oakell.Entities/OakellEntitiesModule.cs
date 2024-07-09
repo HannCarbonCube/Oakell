@@ -18,7 +18,7 @@ using Volo.Abp.TenantManagement;
 namespace Oakell;
 
 [DependsOn(
-    typeof(OakellDomainSharedModule),
+    typeof(OakellEntitiesSharedModule),
     typeof(AbpAuditLoggingDomainModule),
     typeof(AbpBackgroundJobsDomainModule),
     typeof(AbpFeatureManagementDomainModule),
@@ -30,7 +30,7 @@ namespace Oakell;
     typeof(AbpTenantManagementDomainModule),
     typeof(AbpEmailingModule)
 )]
-public class OakellDomainModule : AbpModule
+public class OakellEntitiesModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {

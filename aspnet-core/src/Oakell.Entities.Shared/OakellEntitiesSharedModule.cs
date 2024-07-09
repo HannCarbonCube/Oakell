@@ -25,7 +25,7 @@ namespace Oakell;
     typeof(AbpSettingManagementDomainSharedModule),
     typeof(AbpTenantManagementDomainSharedModule)    
     )]
-public class OakellDomainSharedModule : AbpModule
+public class OakellEntitiesSharedModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
@@ -37,7 +37,7 @@ public class OakellDomainSharedModule : AbpModule
     {
         Configure<AbpVirtualFileSystemOptions>(options =>
         {
-            options.FileSets.AddEmbedded<OakellDomainSharedModule>();
+            options.FileSets.AddEmbedded<OakellEntitiesSharedModule>();
         });
 
         Configure<AbpLocalizationOptions>(options =>
