@@ -1,7 +1,5 @@
 import { ReplaceableComponentsService } from '@abp/ng.core';
-import { Component, OnInit} from '@angular/core';
-import { LoginComponent } from './login/login.component';
-import { eAccountComponents } from '@abp/ng.account';
+import { Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +8,13 @@ import { eAccountComponents } from '@abp/ng.account';
     <abp-dynamic-layout></abp-dynamic-layout>
   `,
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   constructor(private replaceableComponentsService: ReplaceableComponentsService) {}
 
-  ngOnInit() {
-    console.log('ngOnInit called');
+  // ngOnInit() {
     // this.replaceableComponentsService.add({
     //   key: eAccountComponents.Login,
     //   component: LoginComponent,
     // });
-  }
+  // }
 }
