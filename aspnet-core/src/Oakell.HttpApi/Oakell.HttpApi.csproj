@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Oakell.Application.Contracts\Oakell.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Oakell.Services.Contracts\Oakell.Services.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

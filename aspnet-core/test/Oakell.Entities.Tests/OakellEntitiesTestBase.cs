@@ -3,7 +3,7 @@
 namespace Oakell;
 
 /* Inherit from this class for your domain layer tests. */
-public abstract class OakellDomainTestBase<TStartupModule> : OakellTestBase<TStartupModule>
+public abstract class OakellEntitiesTestBase<TStartupModule> : OakellTestBase<TStartupModule>
     where TStartupModule : IAbpModule
 {
 

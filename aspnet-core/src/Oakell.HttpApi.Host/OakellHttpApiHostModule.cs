@@ -136,18 +136,18 @@ public class OakellHttpApiHostModule : AbpModule
         {
             Configure<AbpVirtualFileSystemOptions>(options =>
             {
-                options.FileSets.ReplaceEmbeddedByPhysical<OakellDomainSharedModule>(
+                options.FileSets.ReplaceEmbeddedByPhysical<OakellEntitiesSharedModule>(
                     Path.Combine(hostingEnvironment.ContentRootPath,
-                        $"..{Path.DirectorySeparatorChar}Oakell.Domain.Shared"));
-                options.FileSets.ReplaceEmbeddedByPhysical<OakellDomainModule>(
+                        $"..{Path.DirectorySeparatorChar}Oakell.Entities.Shared"));
+                options.FileSets.ReplaceEmbeddedByPhysical<OakellEntitiesModule>(
                     Path.Combine(hostingEnvironment.ContentRootPath,
-                        $"..{Path.DirectorySeparatorChar}Oakell.Domain"));
+                        $"..{Path.DirectorySeparatorChar}Oakell.Entities"));
                 options.FileSets.ReplaceEmbeddedByPhysical<OakellApplicationContractsModule>(
                     Path.Combine(hostingEnvironment.ContentRootPath,
-                        $"..{Path.DirectorySeparatorChar}Oakell.Application.Contracts"));
+                        $"..{Path.DirectorySeparatorChar}Oakell.Services.Contracts"));
                 options.FileSets.ReplaceEmbeddedByPhysical<OakellApplicationModule>(
                     Path.Combine(hostingEnvironment.ContentRootPath,
-                        $"..{Path.DirectorySeparatorChar}Oakell.Application"));
+                        $"..{Path.DirectorySeparatorChar}Oakell.Services"));
             });
         }
     }

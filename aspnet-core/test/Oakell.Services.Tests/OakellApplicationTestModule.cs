@@ -4,7 +4,7 @@ namespace Oakell;
 
 [DependsOn(
     typeof(OakellApplicationModule),
-    typeof(OakellDomainTestModule)
+    typeof(OakellEntitiesTestModule)
 )]
 public class OakellApplicationTestModule : AbpModule
 {

@@ -16,7 +16,7 @@ using Volo.Abp.TenantManagement.EntityFrameworkCore;
 namespace Oakell.EntityFrameworkCore;
 
 [DependsOn(
-    typeof(OakellDomainModule),
+    typeof(OakellEntitiesModule),
     typeof(AbpIdentityEntityFrameworkCoreModule),
     typeof(AbpOpenIddictEntityFrameworkCoreModule),
     typeof(AbpPermissionManagementEntityFrameworkCoreModule),
