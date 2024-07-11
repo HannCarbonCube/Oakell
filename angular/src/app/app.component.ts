@@ -10,11 +10,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   constructor(private replaceableComponentsService: ReplaceableComponentsService) {}
-
-  // ngOnInit() {
-    // this.replaceableComponentsService.add({
-    //   key: eAccountComponents.Login,
-    //   component: LoginComponent,
-    // });
-  // }
 }

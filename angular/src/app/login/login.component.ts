@@ -8,6 +8,9 @@ import { OakellAuthService } from '../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+//This is a custom login component and not the component currently in use on the frontend.
+//This component will be used later on when custom login screen gets built
+//Destroy this comments when that happens
 export class LoginComponent {
   username: string = '';
   password: string = '';
