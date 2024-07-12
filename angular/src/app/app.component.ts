@@ -1,4 +1,3 @@
-import { ReplaceableComponentsService } from '@abp/ng.core';
 import { Component } from '@angular/core';
 
 @Component({
@@ -9,5 +8,5 @@ import { Component } from '@angular/core';
   `,
 })
 export class AppComponent {
-  constructor(private replaceableComponentsService: ReplaceableComponentsService) {}
+  constructor() {}
 }
