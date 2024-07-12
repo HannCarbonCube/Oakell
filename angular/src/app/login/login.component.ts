@@ -18,7 +18,7 @@ export class LoginComponent {
   ) {}
 
   onSubmit() {
-    let loginParams: LoginParams = {
+    const loginParams: LoginParams = {
       username: this.username,
       password: this.password,
       rememberMe: true,
